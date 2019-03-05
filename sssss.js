@@ -77,7 +77,7 @@ function fastUpdate(){
 
 function updateMessage(){
 	message(function(result) {
-		a_message = result.substring(1);
+		a_message = result.substring(5);
 		doc_message.innerHTML = a_message;
 	});
 }
