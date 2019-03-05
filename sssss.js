@@ -64,7 +64,8 @@ function initUpdate(){
 }	
 
 function mainUpdate(){
-	updateMessage();
+	//updateMessage();
+	updateReq();
 	setTimeout(mainUpdate, 4000);
 }
 
