@@ -42,6 +42,14 @@ window.addEventListener('load', async () => {
 var a_message = "";
 var a_req = 0;
 
+var f_message = "";
+var f_initialName = "";
+var f_name = "";
+var f_otherAdr;
+var f_otherName = "";
+var f_fighter = 0;
+var f_odd = 50;
+
 var doc_message = document.getElementById('message');
 var doc_name = document.getElementById('name');
 var doc_nest1 = document.getElementById('nest1');
@@ -49,9 +57,9 @@ var doc_egg1 = document.getElementById('egg1');
 var doc_ascension1 = document.getElementById('ascension1');
 
 var doc_fieldMessage = document.getElementById('field_message');
-var	doc_fieldFirstName = document.getElementById('field_first_name');
+var	doc_fieldInitialName = document.getElementById('field_first_name');
 var	doc_fieldName = document.getElementById('field_name');
-var	doc_fieldOther = document.getElementById('field_other');
+var	doc_fieldOtherAdr = document.getElementById('field_other');
 var	doc_fieldOtherName = document.getElementById('field_other_name');
 var	doc_fieldFighter = document.getElementById('field_fighter');
 var	doc_fieldOdd = document.getElementById('field_odd');
@@ -70,8 +78,49 @@ function mainUpdate(){
 }
 
 function fastUpdate(){
+	refreshFieldMessage();
+	refreshFieldFirstName();
+	refreshFieldName();
+	refreshFieldOtherAdr();
+	refreshFieldOtherName();
+	refreshFieldFighter();
+	refreshFieldOdd();
 	setTimeout(fastUpdate, 123);
 }
+
+//-- LOCAL FIELDS --//
+
+function refreshFieldMessage(){
+	f_message = doc_fieldMessage.value; 
+}
+
+function refreshFieldFirstName(){
+	f_initialName = doc_fieldInitialName.value; 
+}
+
+function refreshFieldName(){
+	f_name = doc_fieldName.value; 
+}
+
+function refreshFieldOtherAdr(){
+	f_otherAdr = doc_fieldOtherAdr.value; 
+}
+
+function refreshFieldOtherName(){
+	f_otherName = doc_fieldOtherName.value; 
+}
+
+function refreshFieldFighter(){
+	f_fighter = doc_fieldFighter.value; 
+}
+
+function refreshFieldOdd(){
+	if(doc_fieldOdd.value > 95){
+		doc_fieldOdd.value = 95;
+	}
+	f_odd = doc_fieldOdd.value;
+}
+	
 
 //-- WEB3 CALLS --//
 
@@ -91,7 +140,7 @@ function updateReq(){
 //-- WEB3 ACTIONS --//
 
 function webJoinGame() {
-	JoinGame(doc_fieldFirstName, function(){
+	JoinGame(f_initialName, function(){
 	});
 }
 
@@ -101,22 +150,25 @@ function webHatch(_nest) {
 }
 
 function webNameMe() {
-	NameMe(1, doc_fieldName.innerHTML, function(){
+	NameMe(1, f_name, function(){
 	});
 }
 
 function webRenameOther() {
-	RenameOther(1, doc_fieldOtherName, doc_fieldOther, function(){
+	RenameOther(1, f_otherName, f_otherAdr, function(){
 	});
 }
 
 function webChangeMessage() {
-	ChangeMessage(doc_message, function(){
+	ChangeMessage(f_message, function(){
 	});
 }
 
 function webVentureLair() {
-	VentureLair(1, doc_fieldFighter, doc_fieldOdd, function(){
+	if(f_odd < 5){
+		f_odd = 5;
+	}
+	VentureLair(1, f_fighter, f_odd, function(){
 	});
 }
 
