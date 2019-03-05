@@ -40,6 +40,7 @@ window.addEventListener('load', async () => {
 //-- VARIABLES --//
 
 var a_message = "";
+var a_req = 0;
 
 var doc_message = document.getElementById('message');
 var doc_name = document.getElementById('name');
@@ -76,6 +77,12 @@ function fastUpdate(){
 function updateMessage(){
 	message(function(result) {
 		a_message = result;
+	});
+}
+
+function updateReq(){
+	NAME_OTHER_REQ(function(result) {
+		a_req = result;
 	});
 }
 
