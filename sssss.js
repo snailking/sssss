@@ -78,7 +78,7 @@ function fastUpdate(){
 function updateMessage(){
 	message(function(result) {
 		a_message = result;
-		doc_message = a_message;
+		doc_message.innerHTML = a_message;
 	});
 }
 
@@ -392,8 +392,8 @@ function message(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('message ',web3.toAscii(result));
-            callback(web3.toAscii(result))
+            console.log('message ',web3.toUtf8(result));
+            callback(web3.toUtf8(result))
         }
         else{
             console.log('transaction failed with ',error.message)
