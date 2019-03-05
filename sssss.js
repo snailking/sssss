@@ -101,7 +101,7 @@ function webHatch(_nest) {
 }
 
 function webNameMe() {
-	NameMe(1, doc_fieldName, function(){
+	NameMe(1, doc_fieldName.innerHTML, function(){
 	});
 }
 
