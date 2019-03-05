@@ -78,6 +78,7 @@ function fastUpdate(){
 function updateMessage(){
 	message(function(result) {
 		a_message = result;
+		doc_message = a_message;
 	});
 }
 
