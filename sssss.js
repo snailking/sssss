@@ -397,7 +397,7 @@ function toAscii(hex) {
     }
   }
 
-  return str;
+  return str.substring(1);
 }
 
 function message(callback){
