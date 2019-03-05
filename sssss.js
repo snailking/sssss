@@ -13,7 +13,7 @@ window.addEventListener('load', async () => {
 				if (!error) {
 					if (result != "99") {
 						console.log("Error: you must be on POA Network to use this website.");
-						showModal(network_modal);
+						//showModal(network_modal);
 					}
 				}
 			});
