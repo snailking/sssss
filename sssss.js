@@ -77,7 +77,7 @@ function fastUpdate(){
 
 function updateMessage(){
 	message(function(result) {
-		a_message = result.substring(5);
+		a_message = result;
 		doc_message.innerHTML = a_message;
 	});
 }
@@ -397,7 +397,7 @@ function toAscii(hex) {
     }
   }
 
-  return str;
+  return str.substring(2);
 }
 
 function message(callback){
