@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Title, Favicon -->
+		<title>Slugroad</title>
+		<link rel="shortcut icon" href="favicon.png" type="image/x-icon">		
+		<!-- CSS -->
+		<link rel="stylesheet" type="text/css" href="theme_bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="theme_animista.css">
+		<link rel="stylesheet" type="text/css" href="theme_slugroad.css">		
+	</head>
+	
+	<body align="center">
+		<!-- TITLE -->
+		<h1>SUPER SLOTHLY SNAIL SURPRISE SLAUGHTER</h1>
+		<!-- MESSAGE -->
+		<h1><span class="pulse" id="message">?</span></h1>
+		<!-- SNAIL MANAGEMENT -->
+		<div class="jumbotron" align="center">
+			<h3>NEST OF <span id="name">?</span></h3>
+			<br><button class="btn btn-lg btn-info" onclick="webJoinGame">JOIN GAME</button><br>
+			<h5>Choose your name: <input type="text" id="field_first_name" size="10"></h5>
+			<div class="row">
+				<div class="col-sm">
+					<h5>RED SNAILS: <span id="nest1">?</span></h5>
+					<h5>Eggs = <span id="egg1">?</span></h5>
+					<h5>Ascension <span id="ascension1">?</span></h5>
+					<button class="btn btn-lg btn-info" onclick="webHatch(1)">HATCH RED EGGS</button>
+				</div>
+			</div>
+		</div>
+		<!-- CHANGE TEXT -->
+		<div class="jumbotron" align="center">
+			<h3>LEAVE YOUR MARK</h3>
+			<div class="row">
+				<div class="col-sm">
+					<button class="btn btn-lg btn-info" onclick="webNameMe()">CHANGE YOUR NAME</button><br>
+					<h5>Your new name: <input type="text" id="field_name" size="10">
+					<h5>Requirement: 10k snails</h5>
+				</div>
+				<div class="col-sm">
+					<button class="btn btn-lg btn-info" onclick="webRenameOther()">RENAME ANOTHER PLAYER</button><br>
+					<h5>Who to rename? <input type="text" id="field_other" size="10"></h5>
+					<h5>Their new name: <input type="text" id="field_other_name" size="10"></h5>
+					<h5>Requirement: 100k snails</h5>
+				</div>
+				<div class="col-sm">
+					<button class="btn btn-lg btn-info" onclick="webChangeMessage()">CHANGE MESSAGE</button><br>
+					<h5>New message: <input type="text" id="field_message" size="10"></h5>
+					<h5>Requirement: Ascend</h5>
+				</div>
+			</div>
+		</div>
+		<!-- SLOTH FIGHT -->
+		<div class="jumbotron" align="center">
+			<h3>FIGHT THE SLOTH</h3>
+			<div class="row">
+				<div class="col-sm">
+					<button class="btn btn-lg btn-info" onclick="webVentureLair()">VENTURE IN SLOTH LAIR</button><br>
+					<h5>Snails to send: <input type="text" id="field_fighter" value="1" size="3">
+					<h5>Victory odds: <input type="text" id="field_odd" value="50" size="2">
+				</div>
+				<div class="col-sm">
+					<button class="btn btn-lg btn-info" onclick="webResolveFight()">RESOLVE FIGHT</button><br>
+				</div>
+			</div>
+		</div>
+		<!-- EVENTS -->
+		<!-- JAVASCRIPT -->
+		<script src="sssss.js"></script>				
+		<script>
+			initUpdate();
+		</script>		
+	</body>
+</html>
