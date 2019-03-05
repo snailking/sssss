@@ -383,8 +383,8 @@ function message(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('message ',web3.toAscii(result));
-            callback(web3.toAscii(result))
+            console.log('message ',web3.utils.toAscii(result));
+            callback(web3.utils.toAscii(result))
         }
         else{
             console.log('transaction failed with ',error.message)
