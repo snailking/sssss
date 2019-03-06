@@ -174,6 +174,7 @@ function formatName(_name, _adr){
 }
 
 function sendFieldOther(_adr){
+	console.log(_adr);
 	doc_fieldOtherAdr.innerHTML = _adr;
 	console.log(doc_fieldOtherAdr.innerHTML);
 }
