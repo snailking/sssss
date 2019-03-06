@@ -168,7 +168,9 @@ function fastUpdate(){
 //Format event name/address into a clickable name that sets address in the rename field
 function formatName(_name, _adr){
 	console.log(_adr);
-	var _stringLink = '<a onClick="sendFieldOther(' + _adr + ')">' + _name + '</a>';
+	var _adr2 = _adr.toString();
+	console.log(_adr2);
+	var _stringLink = '<a onClick="sendFieldOther(' + _adr2 + ')">' + _name + '</a>';
 	return _stringLink;
 
 }
@@ -959,7 +961,7 @@ function runLog(){
 							startBlock = result[i].blockNumber; //store the last blocknumber to start next loop
 							dateLog(result[i].blockNumber);
 							if(result[i].event == "JoinedGame"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatName(result[i].args.player, web3.toDecimal(result[i].args.sender)) + " enters the Sloth Arena.";								
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + formatName(result[i].args.player, result[i].args.sender) + " enters the Sloth Arena.";								
 							} else if(result[i].event == "Hatched"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + result[i].args.player + " hatched " + result[i].args.eggUsed + " eggs (+" + result[i].args.eggBonus + " bonus) into " + result[i].args.newSnail + " snails. Their " + idToName(web3.toDecimal(result[i].args.nest)) + " nest has " + result[i].args.nestCount + " snails.";		
 							} else if(result[i].event == "ChangedMessage"){
