@@ -457,7 +457,7 @@ function runLog(){
 							} else if(result[i].event == "NamedPlayer"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] From now on, " + toAscii(result[i].args.player) + " will be known as " + toAscii(result[i].args.name);			
 							} else if(result[i].event == "RenamedOther"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] Say goodbye to " + toAscii(result[i].args.previousName) + "! " + toAscii(result[i].args.player + " decided on their new name: " + toAscii(result[i].args.name;
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] Say goodbye to " + toAscii(result[i].args.previousName) + "! " + toAscii(result[i].args.player) + " decided on their new name: " + toAscii(result[i].args.name);
 							} else if(result[i].event == "VenturedLair"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " sends " + result[i].args.fighterCount + " " + idToName(result[i].args.nest) + " snails to fight the Sloth. We estimate their odds of success at " + result[i].args.odd + "%";
 							} else if(result[i].event == "WonFight"){
