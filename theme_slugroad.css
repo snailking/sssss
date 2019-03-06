@@ -4,7 +4,7 @@
 
 /* Body goes first */
 body {
-	background-image: url("img/retro_bg_1.png");
+	background-image: url("sloth_bg.jpg");
 	background-color: #448cff;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -24,7 +24,7 @@ body:before {
   width: 100%;
   height: 100%;
   z-index: -10;
-  background: url("img/retro_bg_1.png") no-repeat center center;
+  background: url("sloth_bg.jpg") no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -129,15 +129,6 @@ a {
   -ms-filter: brightness(60%);
 }
 
-/* SnailThrone background */
-
-.snailthrone{
-	background-image: url("img/snailthrone_blue.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	min-height: 200px;
-}
-
 /* White text with black shadow for contrast */
 
 .black-shadow {
@@ -153,31 +144,14 @@ a {
 
 .img-border {
 	border: 32px solid;
-	border-image: url("img/border_5.png") 32 round;
+	border-image: url("sloth_cup.jpg") 32 round;
 }
 
 .img-border2 {
 	border: 8px solid;
-	border-image: url("img/border_5.png") 16 round;
+	border-image: url("sloth_cup.jpg") 16 round;
 	margin: 4px;
 }
-
-/* Egg and ether backgrounds */
-
-.egg{
-	background-image: url("img/egg.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 128px;
-}
-
-.ether{
-	background-image: url("img/ether_brown.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 128px;
-}
-
 
 a:hover{
 	text-decoration: none;
@@ -200,12 +174,12 @@ p {
 }
 
 .jumbotron {
-	background-color: #000000;
+	background-color: #D2B48C;
 	position: center;
 	margin-left: auto;
 	margin-right: auto;
 	border: 32px solid;
-	border-image: url("img/border_5.png") 32 round;
+	border-image: url("sloth_hang.jpg") 300 round;
 	padding: 1rem 1rem;
 	margin-bottom: 0.5rem;
 	border-radius: 0.2rem;
