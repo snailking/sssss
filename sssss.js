@@ -167,9 +167,10 @@ function fastUpdate(){
 
 //Format event name/address into a clickable name that sets address in the rename field
 function formatName(_name, _adr){
+	console.log(_adr);
 	var _stringLink = '<a onClick="sendFieldOther('+ _adr + ')">' + _name + '</a>';
 	return _stringLink;
-	console.log(_adr);
+
 }
 
 function sendFieldOther(_adr){
