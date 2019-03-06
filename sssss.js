@@ -237,7 +237,7 @@ function refreshFieldOdd(){
 }
 
 function refreshReward(){
-	b_reward = parseInt(f_fighter * 100 / f_odd) - f_fighter));
+	b_reward = parseInt((f_fighter * 100 / f_odd) - f_fighter);
 	doc_reward.innerHTML = b_reward;
 }
 
