@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Title, Favicon -->
+		<title>SUPER SLOTHLY SNAIL SURPRISE SLAUGHTER</title>
+		<link rel="shortcut icon" href="favicon.png" type="image/x-icon">		
+		<!-- CSS -->
+		<link rel="stylesheet" type="text/css" href="theme_bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="theme_animista.css">
+		<link rel="stylesheet" type="text/css" href="theme_slugroad.css">		
+	</head>
+	
+	<body align="center">
+		<!-- TITLE -->
+		<h1 align="center">SUPER SLOTHLY SNAIL SURPRISE SLAUGHTER</h1><br>
+		<!-- GLOBAL HATCH BONUS -->
+		<div class="jumbotron" align="center">
+			<h3>GLOBAL HATCH BONUS = <span id="global_bonus">?</span> EGGS</h3>
+		</div><br>
+		<!-- MESSAGE -->
+		<h1 align="center"><span class="pulse" id="message">?</span></h1><br>
+		<!-- SNAIL MANAGEMENT -->
+		<div class="jumbotron" align="center">
+			<h3>NEST OF <span id="name">?</span></h3>
+			<br><button class="btn btn-lg btn-success" onclick="webJoinGame()">JOIN GAME</button><br>
+			<h5>Choose your name: <input type="text" id="field_first_name" size="10"></h5>
+			<div class="row">
+				<div class="col-sm">
+					<h5>RED SNAILS: <span id="nest0">?</span></h5>
+					<h5>Eggs = <span id="egg0">?</span></h5>
+					<h5>Ascension <span id="ascension0">?</span></h5>
+					<button class="btn btn-lg btn-success" onclick="webHatch(0)">HATCH RED EGGS</button>
+				</div>
+				<div class="col-sm">
+					<h5>GREEN SNAILS: <span id="nest1">?</span></h5>
+					<h5>Eggs = <span id="egg1">?</span></h5>
+					<h5>Ascension <span id="ascension1">?</span></h5>
+					<button class="btn btn-lg btn-success" onclick="webHatch(1)">HATCH GREEN EGGS</button>
+				</div>
+				<div class="col-sm">
+					<h5>YELLOW SNAILS: <span id="nest2">?</span></h5>
+					<h5>Eggs = <span id="egg2">?</span></h5>
+					<h5>Ascension <span id="ascension2">?</span></h5>
+					<button class="btn btn-lg btn-success" onclick="webHatch(2)">HATCH YELLOW EGGS</button>
+				</div>
+				<div class="col-sm">
+					<h5>PURPLE SNAILS: <span id="nest3">?</span></h5>
+					<h5>Eggs = <span id="egg3">?</span></h5>
+					<h5>Ascension <span id="ascension3">?</span></h5>
+					<button class="btn btn-lg btn-success" onclick="webHatch(3)">HATCH PURPLE EGGS</button>
+				</div>
+				<div class="col-sm">
+					<h5>ORANGE SNAILS: <span id="nest4">?</span></h5>
+					<h5>Eggs = <span id="egg4">?</span></h5>
+					<h5>Ascension <span id="ascension4">?</span></h5>
+					<button class="btn btn-lg btn-success" onclick="webHatch(4)">HATCH ORANGE EGGS</button>
+				</div>
+				<div class="col-sm">
+					<h5>BLUE SNAILS: <span id="nest5">?</span></h5>
+					<h5>Eggs = <span id="egg5">?</span></h5>
+					<h5>Ascension <span id="ascension5">?</span></h5>
+					<button class="btn btn-lg btn-success" onclick="webHatch(5)">HATCH BLUE EGGS</button>
+				</div>
+				<div class="col-sm">
+					<h5>WHITE SNAILS: <span id="nest6">?</span></h5>
+					<h5>Eggs = <span id="egg6">?</span></h5>
+					<h5>Ascension <span id="ascension6">?</span></h5>
+					<button class="btn btn-lg btn-success" onclick="webHatch(6)">HATCH WHITE EGGS</button>
+				</div>
+				<div class="col-sm">
+					<h5>BLACK SNAILS: <span id="nest7">?</span></h5>
+					<h5>Eggs = <span id="egg7">?</span></h5>
+					<h5>Ascension <span id="ascension7">?</span></h5>
+					<button class="btn btn-lg btn-success" onclick="webHatch(7)">HATCH BLACK EGGS</button>
+				</div>
+			</div>
+		</div><br>
+		<!-- SLOTH FIGHT -->
+		<div class="jumbotron" align="center">
+			<h3>FIGHT THE SLOTH</h3>
+			<div class="row">
+				<div class="col-sm">
+					<button class="btn btn-lg btn-success" onclick="webVentureLair()">VENTURE IN SLOTH LAIR</button><br>
+					<h5>Snails to send: <input type="text" id="field_fighter" value="1" size="3"></h5>
+					<h5>Victory odds: <input type="text" id="field_odd" value="50" size="2"></h5>
+					<h5>Reward: <span id="reward">?</span></h5>
+					<h5>Which nest to send?  <div class="dropdown">
+						<button id="nestVenture">Red</button>
+						<div class="dropdown-content">
+							<a onClick="changeNestVenture(0)">Red</a>
+							<a onClick="changeNestVenture(1)">Green</a>
+							<a onClick="changeNestVenture(2)">Yellow</a>
+							<a onClick="changeNestVenture(3)">Purple</a>
+							<a onClick="changeNestVenture(4)">Orange</a>
+							<a onClick="changeNestVenture(5)">Blue</a>
+							<a onClick="changeNestVenture(6)">White</a>
+							<a onClick="changeNestVenture(7)">Black</a>
+						</div>
+					</div></h5>
+				</div>
+				<div class="col-sm">
+					<br><div id="loader_idle" class="loader-idle"></div><div id="loader_active" class="loader-active"></div>
+				</div>
+				<div class="col-sm">
+					<button class="btn btn-lg btn-success" onclick="webResolveFight()">RESOLVE FIGHT</button><br>
+				</div>
+			</div>
+		</div><br>
+		<!-- EVENT LOG -->
+		<div class="jumbotron">
+			<div class="row">
+				<div class="col-sm">
+					<h3 style="display: inline-block;">EVENTS</h3>
+				</div>
+				<div class="col-sm" align="right">
+					<button class="btn btn-success" onclick="runLog()">Get Past Events</button>
+				</div>
+			</div>
+			<div class="scroll-box img-border2 info2" id="logboxscroll">
+				<p><span id="eventlog">[Waiting for events...]</span></p>
+			</div>
+		</div><br>
+		<!-- CHANGE TEXT -->
+		<div class="jumbotron" align="center">
+			<h3>LEAVE YOUR MARK</h3>
+			<div class="row">
+				<div class="col-sm">
+					<button class="btn btn-lg btn-success" onclick="webNameMe()">CHANGE YOUR NAME</button><br> 
+					
+					<h5>Your new name: <input type="text" id="field_name" value="(enter your new name here)" size="10">
+					<h5>Requirement: 10k snails</h5>
+					<h5>Which nest to sacrifice? <div class="dropdown">
+						<button id="nestNameMe">Red</button>
+						<div class="dropdown-content">
+							<a onClick="changeNestName(0)">Red</span>
+							<a onClick="changeNestName(1)">Green</a>
+							<a onClick="changeNestName(2)">Yellow</a>
+							<a onClick="changeNestName(3)">Purple</a>
+							<a onClick="changeNestName(4)">Orange</a>
+							<a onClick="changeNestName(5)">Blue</a>
+							<a onClick="changeNestName(6)">White</a>
+							<a onClick="changeNestName(7)">Black</a>
+						</div>
+					</div></h5>
+				</div>
+				<div class="col-sm">
+					<button class="btn btn-lg btn-success" onclick="webRenameOther()">RENAME ANOTHER PLAYER</button><br>
+					<h5>Who to rename? <input type="text" id="field_other" value="(enter 0x address here)" size="10"></h5>
+					<h5>Their new name: <input type="text" id="field_other_name" value="(enter their new name here)" size="10"></h5>
+					<h5>Requirement: 100k snails</h5>
+					<h5>Which nest to sacrifice? <div class="dropdown">
+						<button id="nestRenameOther">Red</button>
+						<div class="dropdown-content">
+							<a onClick="changeNestRename(0)">Red</a>
+							<a onClick="changeNestRename(1)">Green</a>
+							<a onClick="changeNestRename(2)">Yellow</a>
+							<a onClick="changeNestRename(3)">Purple</a>
+							<a onClick="changeNestRename(4)">Orange</a>
+							<a onClick="changeNestRename(5)">Blue</a>
+							<a onClick="changeNestRename(6)">White</a>
+							<a onClick="changeNestRename(7)">Black</a>
+						</div>
+					</div></h5>
+				</div>
+				<div class="col-sm">
+					<button class="btn btn-lg btn-success" onclick="webChangeMessage()">CHANGE MESSAGE</button><br>
+					<h5>New message: <input type="text" id="field_message" value="(enter your message here)" size="10"></h5>
+					<h5>Requirement: Ascend</h5>
+				</div>
+			</div>
+		</div><br>
+		
+		<!-- EVENTS -->
+		<!-- DESCRIPTION -->
+		<div class="jumbotron" align="center">
+			<h5>Hatch snails of different colors.</h5>
+				<h5>When snails reach 1MM, you ascend.</h5>
+				<h5>Ascension resets your snails (of that color) to 0.</h5>
+				<h5>It also gives them a multiplier on hatch.</h5>
+				<h5>Ascension also allows you to post a message, displayed on the website.</h5>
+				<h5>Sacrifice 10K snails to rename yourself.</h5>
+				<h5>Sacrifice 100k snails to rename another player.</h5>
+		</div>
+		<!-- JAVASCRIPT -->
+		<script src="sssss_old_1.js"></script>				
+		<script>
+			initUpdate();
+		</script>		
+	</body>
+</html>
