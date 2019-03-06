@@ -497,7 +497,8 @@ function ResolveFight(callback){
     function(error,result){
         if(!error){
             //console.log('ResolveFight ',result);
-            callback(result)
+            callback(result);
+			stopVentureAnim();
         }
         else{
             //console.log('transaction failed with ',error.message)
@@ -514,7 +515,8 @@ function VentureLair(_nest,_fighterCount,_odd,callback){
     function(error,result){
         if(!error){
             //console.log('VentureLair ',result);
-            callback(result)
+            callback(result);
+			startVentureAnim();
         }
         else{
             //console.log('transaction failed with ',error.message)
@@ -943,9 +945,9 @@ function runLog(){
 							startBlock = result[i].blockNumber; //store the last blocknumber to start next loop
 							dateLog(result[i].blockNumber);
 							if(result[i].event == "JoinedGame"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " enters the Sloth Arena.";								
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + result[i].args.player + " enters the Sloth Arena.";								
 							} else if(result[i].event == "Hatched"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " hatched " + result[i].args.eggUsed + " eggs (+" + result[i].args.eggBonus + " bonus) into " + result[i].args.newSnail + " snails. Their " + idToName(result[i].args.nest) + " nest has " + result[i].args.nestCount + " snails.";		
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " hatched " + result[i].args.eggUsed + " eggs (+" + result[i].args.eggBonus + " bonus) into " + result[i].args.newSnail + " snails. Their " + idToName(web3.toDecimal(result[i].args.nest)) + " nest has " + result[i].args.nestCount + " snails.";		
 							} else if(result[i].event == "ChangedMessage"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " changed the message to: " + toAscii(result[i].args.message);
 							} else if(result[i].event == "NamedPlayer"){
@@ -953,9 +955,9 @@ function runLog(){
 							} else if(result[i].event == "RenamedOther"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] Say goodbye to " + toAscii(result[i].args.previousName) + "! " + toAscii(result[i].args.player) + " decided on their new name: " + toAscii(result[i].args.name);
 							} else if(result[i].event == "VenturedLair"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " sends " + result[i].args.fighterCount + " " + idToName(result[i].args.nest) + " snails to fight the Sloth. We estimate their odds of success at " + result[i].args.odd + "%";
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " sends " + result[i].args.fighterCount + " " + idToName(web3.toDecimal(result[i].args.nest)) + " snails to fight the Sloth. We estimate their odds of success at " + result[i].args.odd + "%";
 							} else if(result[i].event == "WonFight"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] VICTORY! The sloth rolls a " + result[i].args.result + " against " + toAscii(result[i].args.player) + "'s " + result[i].args.odd + ", and rolls over. " + idToName(result[i].args.nest) + " snails take home " + result[i].args.reward + " of their friends.";
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] VICTORY! The sloth rolls a " + result[i].args.result + " against " + toAscii(result[i].args.player) + "'s " + result[i].args.odd + ", and rolls over. " + idToName(web3.toDecimal(result[i].args.nest)) + " snails take home " + result[i].args.reward + " of their friends.";
 							} else if(result[i].event == "LostFight"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] DEFEAT! The sloth munches on " + result[i].args.fighterCount + " snails tonight, with a "  + result[i].args.result + " against " + toAscii(result[i].args.player) + "'s " + result[i].args.odd;
 							}
