@@ -413,6 +413,9 @@ function checkHash(txhash, eventname) {
 var logboxscroll = document.getElementById('logboxscroll');
 var eventlogdoc = document.getElementById("eventlog");
 
+var u_updateEvent = false;
+var p_keepUpdating = false;
+
 //Changes u_updateLog to true, manual choice in case event watching fails
 function startLogging(){
 	u_updateEvent = true;
