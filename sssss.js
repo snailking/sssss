@@ -1,6 +1,6 @@
-var contractAddress="0xc5e84e15ea84f607dac61846f4c6d909c9981023"; //POA Core
+var contractAddress="0x5ec7938a15bd80c64b9911966788d575041dbf2c"; //POA Core v2
 
-//-- WEB3 DETECTION --//
+/* WEB3 DETECTION */
 
 window.addEventListener('load', async () => {
     // Modern dapp browsers...
@@ -35,12 +35,14 @@ window.addEventListener('load', async () => {
     }
 });
 
-/* MODAL */
-
-//-- VARIABLES --//
+/* VARIABLES */
 
 var a_message = "";
+var a_playerName = "";
 var a_req = 0;
+var a_nestCount = [0, 0, 0, 0, 0, 0, 0, 0];
+var a_nestEgg = [0, 0, 0, 0, 0, 0, 0, 0];
+var a_nestAscension = [0, 0, 0, 0, 0, 0, 0, 0];
 
 var f_message = "";
 var f_initialName = "";
@@ -50,11 +52,10 @@ var f_otherName = "";
 var f_fighter = 0;
 var f_odd = 50;
 
+var m_account = "";
+
 var doc_message = document.getElementById('message');
 var doc_name = document.getElementById('name');
-var doc_nest1 = document.getElementById('nest1');
-var doc_egg1 = document.getElementById('egg1');
-var doc_ascension1 = document.getElementById('ascension1');
 
 var doc_fieldMessage = document.getElementById('field_message');
 var	doc_fieldInitialName = document.getElementById('field_first_name');
@@ -64,7 +65,40 @@ var	doc_fieldOtherName = document.getElementById('field_other_name');
 var	doc_fieldFighter = document.getElementById('field_fighter');
 var	doc_fieldOdd = document.getElementById('field_odd');
 
-//-- UPDATE LOOP --//
+var doc_nestSize = [
+document.getElementById('nest0'),
+document.getElementById('nest1'),
+document.getElementById('nest2'),
+document.getElementById('nest3'),
+document.getElementById('nest4'),
+document.getElementById('nest5'),
+document.getElementById('nest6'),
+document.getElementById('nest7')
+];
+
+var doc_nestEgg = [
+document.getElementById('egg0'),
+document.getElementById('egg1'),
+document.getElementById('egg2'),
+document.getElementById('egg3'),
+document.getElementById('egg4'),
+document.getElementById('egg5'),
+document.getElementById('egg6'),
+document.getElementById('egg7')
+];
+
+var doc_nestAscension = [
+document.getElementById('ascension0'),
+document.getElementById('ascension1'),
+document.getElementById('ascension2'),
+document.getElementById('ascension3'),
+document.getElementById('ascension4'),
+document.getElementById('ascension5'),
+document.getElementById('ascension6'),
+document.getElementById('ascension7')
+];
+
+/* UPDATE LOOP */
 
 function initUpdate(){
 	mainUpdate();
@@ -72,8 +106,13 @@ function initUpdate(){
 }	
 
 function mainUpdate(){
+	updateText();
 	updateMessage();
-	updateReq();
+	updateEthAccount();
+	updatePlayerName();
+	runLoop(checkNestSize);
+	runLoop(checkNestEgg);
+	runLoop(checkNestAscension);
 	setTimeout(mainUpdate, 4000);
 }
 
@@ -88,7 +127,35 @@ function fastUpdate(){
 	setTimeout(fastUpdate, 123);
 }
 
-//-- LOCAL FIELDS --//
+/* UTILITIES */
+
+//Loop function to go through nests
+function runLoop(_loop){
+	for(i = 0; i < 8; i++){
+		_loop(i);
+	}
+}
+
+//toAscii function (web3.toAscii doesn't work properly)
+function toAscii(hex) {
+  var str = "";
+  var i = 0, l = hex.length;
+  if (hex.substring(0, 2) === '0x') {
+    i = 2;
+  }
+  for (; i < l; i+=2) {
+    var code = parseInt(hex.substr(i, 2), 16);
+    if(code != 0) {
+      str += String.fromCharCode(code);
+    }
+  }
+
+  return str.substring(2);
+}
+
+/* MODAL */
+
+/* LOCAL FIELDS */
 
 function refreshFieldMessage(){
 	f_message = doc_fieldMessage.value; 
@@ -120,24 +187,56 @@ function refreshFieldOdd(){
 	}
 	f_odd = doc_fieldOdd.value;
 }
-	
 
-//-- WEB3 CALLS --//
+/* TEXT UPDATE */
+
+function updateText(){
+	doc_name.innerHTML = a_playerName;
+	doc_message.innerHTML = a_message;
+	doc_nest1.innerHTML = a_nest1;
+}	
+
+/* WEB3 CALLS */
+
+// Current ETH address in use
+function updateEthAccount(){
+	m_account = web3.eth.accounts[0];
+}
 
 function updateMessage(){
 	message(function(result) {
 		a_message = result;
-		doc_message.innerHTML = a_message;
 	});
 }
 
-function updateReq(){
-	NAME_OTHER_REQ(function(result) {
-		a_req = result;
+function updatePlayerName(){
+	GetName(m_account, function(result) {
+		a_playerName = result;
 	});
 }
 
-//-- WEB3 ACTIONS --//
+function checkNestSize(_nest){
+	GetNest(_nest, m_account, function(result) {
+		a_nestSize[_nest] = result;
+	});
+}
+
+function checkNestEgg(_nest){
+	ComputeEgg(_nest, m_account, function(result) {
+		a_nestEgg[_nest] = result;
+	});
+}
+
+function checkNestCount(_nest){
+	GetAscension(_nest, m_account, function(result) {
+		a_nestAscension[_nest] = result;
+	});
+}
+
+function checkNestAscension(_nest){
+}
+
+/* WEB3 ACTIONS */
 
 function webJoinGame() {
 	JoinGame(f_initialName, function(){
@@ -179,12 +278,13 @@ function webResolveFight() {
 
 /* CONTRACT ABI */
 
-abiDefinition=[{"constant": false,"inputs": [{"name": "_message","type": "string"}],"name": "ChangeMessage","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"}],"name": "HatchEgg","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"}],"name": "JoinedGame","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "eggUsed","type": "uint256"},{"indexed": false,"name": "eggBonus","type": "uint256"},{"indexed": false,"name": "newSnail","type": "uint256"},{"indexed": false,"name": "nestCount","type": "uint256"},{"indexed": false,"name": "nest","type": "uint256"}],"name": "Hatched","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "message","type": "string"}],"name": "ChangedMessage","type": "event"},{"constant": false,"inputs": [{"name": "_name","type": "string"}],"name": "JoinGame","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "name","type": "string"}],"name": "NamedPlayer","type": "event"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_name","type": "string"}],"name": "NameMe","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "previousName","type": "string"},{"indexed": false,"name": "name","type": "string"}],"name": "RenamedOther","type": "event"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_name","type": "string"},{"name": "_adr","type": "address"}],"name": "RenameOther","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": false,"inputs": [],"name": "ResolveFight","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "nest","type": "uint256"},{"indexed": false,"name": "fighterCount","type": "uint256"},{"indexed": false,"name": "odd","type": "uint256"}],"name": "VenturedLair","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "nest","type": "uint256"},{"indexed": false,"name": "fighterCount","type": "uint256"},{"indexed": false,"name": "odd","type": "uint256"},{"indexed": false,"name": "result","type": "uint256"},{"indexed": false,"name": "reward","type": "uint256"}],"name": "WonFight","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "nest","type": "uint256"},{"indexed": false,"name": "fighterCount","type": "uint256"},{"indexed": false,"name": "odd","type": "uint256"},{"indexed": false,"name": "result","type": "uint256"}],"name": "LostFight","type": "event"},{"inputs": [],"payable": false,"stateMutability": "nonpayable","type": "constructor"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_fighterCount","type": "uint256"},{"name": "_odd","type": "uint256"}],"name": "VentureLair","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "canChangeMessage","outputs": [{"name": "","type": "bool"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_adr","type": "address"}],"name": "ComputeEgg","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "ComputeGlobalBonus","outputs": [{"name": "_egg","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "FROGKING_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_adr","type": "address"}],"name": "GetName","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_adr","type": "address"}],"name": "GetNest","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "hasStartingSnail","outputs": [{"name": "","type": "bool"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "lastGlobalHatch","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "message","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "name","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "NAME_OTHER_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "NAME_YOURSELF_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"},{"name": "","type": "uint256"}],"name": "nest","outputs": [{"name": "number","type": "uint256"},{"name": "lastHatch","type": "uint256"},{"name": "ascension","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveBlock","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveCount","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveNest","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveOdd","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "STARTING_SNAIL","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "TIME_TO_HATCH_1SNAIL","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"}];
+abiDefinition=[{"constant": false,"inputs": [{"name": "_message","type": "string"}],"name": "ChangeMessage","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"}],"name": "HatchEgg","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"}],"name": "JoinedGame","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "eggUsed","type": "uint256"},{"indexed": false,"name": "eggBonus","type": "uint256"},{"indexed": false,"name": "newSnail","type": "uint256"},{"indexed": false,"name": "nestCount","type": "uint256"},{"indexed": false,"name": "nest","type": "uint256"}],"name": "Hatched","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "message","type": "string"}],"name": "ChangedMessage","type": "event"},{"constant": false,"inputs": [{"name": "_name","type": "string"}],"name": "JoinGame","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "name","type": "string"}],"name": "NamedPlayer","type": "event"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_name","type": "string"}],"name": "NameMe","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "previousName","type": "string"},{"indexed": false,"name": "name","type": "string"}],"name": "RenamedOther","type": "event"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_name","type": "string"},{"name": "_adr","type": "address"}],"name": "RenameOther","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": false,"inputs": [],"name": "ResolveFight","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "nest","type": "uint256"},{"indexed": false,"name": "fighterCount","type": "uint256"},{"indexed": false,"name": "odd","type": "uint256"}],"name": "VenturedLair","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "nest","type": "uint256"},{"indexed": false,"name": "fighterCount","type": "uint256"},{"indexed": false,"name": "odd","type": "uint256"},{"indexed": false,"name": "result","type": "uint256"},{"indexed": false,"name": "reward","type": "uint256"}],"name": "WonFight","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "nest","type": "uint256"},{"indexed": false,"name": "fighterCount","type": "uint256"},{"indexed": false,"name": "odd","type": "uint256"},{"indexed": false,"name": "result","type": "uint256"}],"name": "LostFight","type": "event"},{"inputs": [],"payable": false,"stateMutability": "nonpayable","type": "constructor"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_fighterCount","type": "uint256"},{"name": "_odd","type": "uint256"}],"name": "VentureLair","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "canChangeMessage","outputs": [{"name": "","type": "bool"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_adr","type": "address"}],"name": "ComputeEgg","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "ComputeGlobalBonus","outputs": [{"name": "_egg","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "FROGKING_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_adr","type": "address"}],"name": "GetAscension","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_adr","type": "address"}],"name": "GetName","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_adr","type": "address"}],"name": "GetNest","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "hasStartingSnail","outputs": [{"name": "","type": "bool"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "lastGlobalHatch","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "message","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "name","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "NAME_OTHER_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "NAME_YOURSELF_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"},{"name": "","type": "uint256"}],"name": "nest","outputs": [{"name": "size","type": "uint256"},{"name": "lastHatch","type": "uint256"},{"name": "ascension","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveBlock","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveCount","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveNest","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveOdd","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "STARTING_SNAIL","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "TIME_TO_HATCH_1SNAIL","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"}]
 
 var contractAbi = web3.eth.contract(abiDefinition);
 var myContract = contractAbi.at(contractAddress);
 
 function ChangeMessage(_message,callback){
+
     var outputData = myContract.ChangeMessage.getData(_message);
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
@@ -200,7 +300,6 @@ function ChangeMessage(_message,callback){
 
 
 function HatchEgg(_nest,callback){
-    
     
     var outputData = myContract.HatchEgg.getData(_nest);
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
@@ -369,6 +468,23 @@ function FROGKING_REQ(callback){
 }
 
 
+function GetAscension(_nest,_adr,callback){
+    
+    
+    var outputData = myContract.GetAscension.getData(_nest,_adr);
+    var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
+    function(error,result){
+        if(!error){
+            console.log('GetAscension ',web3.toDecimal(result));
+            callback(web3.toDecimal(result))
+        }
+        else{
+            console.log('transaction failed with ',error.message)
+        }
+    });
+}
+
+
 function GetName(_adr,callback){
     
     
@@ -376,8 +492,8 @@ function GetName(_adr,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('GetName ',web3.toAscii(result));
-            callback(web3.toAscii(result))
+            console.log('GetName ',toAscii(result));
+            callback(toAscii(result))
         }
         else{
             console.log('transaction failed with ',error.message)
@@ -436,21 +552,6 @@ function lastGlobalHatch(callback){
     });
 }
 
-function toAscii(hex) {
-  var str = "";
-  var i = 0, l = hex.length;
-  if (hex.substring(0, 2) === '0x') {
-    i = 2;
-  }
-  for (; i < l; i+=2) {
-    var code = parseInt(hex.substr(i, 2), 16);
-    if(code != 0) {
-      str += String.fromCharCode(code);
-    }
-  }
-
-  return str.substring(2);
-}
 
 function message(callback){
     
@@ -476,8 +577,8 @@ function name(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('name ',web3.toAscii(result));
-            callback(web3.toAscii(result))
+            console.log('name ',toAscii(result));
+            callback(toAscii(result))
         }
         else{
             console.log('transaction failed with ',error.message)
@@ -637,6 +738,8 @@ function TIME_TO_HATCH_1SNAIL(callback){
         }
     });
 }
+
+
 
 
 
