@@ -169,11 +169,12 @@ function fastUpdate(){
 function formatName(_name, _adr){
 	var _stringLink = '<a onClick="sendFieldOther('+ _adr + ')">' + _name + '</a>';
 	return _stringLink;
+	console.log(_adr);
 }
 
 function sendFieldOther(_adr){
 	doc_fieldOtherAdr.value = _adr;
-	console.log('doc_fieldOtherAdr.value');
+	console.log(doc_fieldOtherAdr.value);
 }
 
 //Loop function to go through nests
@@ -966,11 +967,11 @@ function runLog(){
 							} else if(result[i].event == "RenamedOther"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] Say goodbye to " + result[i].args.previousName + "! " + result[i].args.player + " decided on their new name: " + result[i].args.name;
 							} else if(result[i].event == "VenturedLair"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + result[i].args.player + " sends " + result[i].args.fighterCount + " " + idToName(web3.toDecimal(result[i].args.nest)) + " snails to fight the Sloth. We estimate their odds of success at " + result[i].args.odd + "%";
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + result[i].args.player + " sends " + result[i].args.fighterCount + " " + idToName(web3.toDecimal(result[i].args.nest)) + " snails to fight the Sloth. We estimate their odds of success at " + result[i].args.odd + "%.";
 							} else if(result[i].event == "WonFight"){
 								eventlogdoc.innerHTML += "<br>[" + datetext + "] VICTORY! The sloth rolls a " + result[i].args.result + " against " + result[i].args.player + "'s " + result[i].args.odd + ", and rolls over. " + idToName(web3.toDecimal(result[i].args.nest)) + " snails take home " + result[i].args.reward + " of their friends.";
 							} else if(result[i].event == "LostFight"){
-								eventlogdoc.innerHTML += "<br>[" + datetext + "] DEFEAT! The sloth munches on " + result[i].args.fighterCount + " snails tonight, with a "  + result[i].args.result + " against " + result[i].args.player + "'s " + result[i].args.odd;
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] DEFEAT! The sloth munches on " + result[i].args.fighterCount + " snails tonight, with a "  + result[i].args.result + " against " + result[i].args.player + "'s " + result[i].args.odd + ".";
 							}
 							logboxscroll.scrollTop = logboxscroll.scrollHeight;
 						}
