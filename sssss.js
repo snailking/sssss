@@ -201,6 +201,23 @@ function idToName(_id){
 	}
 }
 
+//Conversion of Date to hh:mm:ss
+var datetext;
+
+function date24() {
+	d = new Date();
+	datetext = d.toTimeString();
+	datetext = datetext.split(' ')[0];
+}	
+
+//Get timestamp for log
+function dateLog(_blockNumber) {
+	d = new Date((timeLaunch + ((_blockNumber - launchBlock) * blockSpan)) * 1000);
+	////////console.log(d);
+	datetext = d.toTimeString();
+	datetext = datetext.split(' ')[0];
+}
+
 /* MODAL */
 
 /* LOCAL FIELDS */
@@ -442,7 +459,7 @@ function runLog(){
 	ranLog = true;
 	myContract.allEvents({ fromBlock: startBlock, toBlock: 'latest' }).get(function(error, result){
 		if(!error){
-			////console.log(result);
+			console.log(result);
 			var i = 0;
 			if(result.length > 0){ //check if we have events, if not stop the loop
 				p_keepUpdating = true;
@@ -477,7 +494,7 @@ function runLog(){
 			}
 		}
 		else{
-			//////console.log("problem!");
+			console.log("problem!");
 		}
 	});
 }
