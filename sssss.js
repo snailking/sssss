@@ -12,7 +12,7 @@ window.addEventListener('load', async () => {
 			web3.version.getNetwork(function(error, result) {
 				if (!error) {
 					if (result != "99") {
-						console.log("Error: you must be on POA Network to use this website.");
+						//console.log("Error: you must be on POA Network to use this website.");
 						//showModal(network_modal);
 					}
 				}
@@ -31,7 +31,7 @@ window.addEventListener('load', async () => {
     }
     // Non-dapp browsers...
     else {
-        //////console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+        ////////console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
     }
 });
 
@@ -73,6 +73,9 @@ var	doc_fieldOdd = document.getElementById('field_odd');
 var doc_nestNameMe = document.getElementById('nestNameMe');
 var doc_nestRenameOther = document.getElementById('nestRenameOther');
 var doc_nestVenture = document.getElementById('nestVenture');
+
+var doc_loaderIdle = document.getElementById('loader_idle');
+var doc_loaderActive = document.getElementById('loader_active');
 
 var doc_nestSize = [
 document.getElementById('nest0'),
@@ -333,6 +336,18 @@ function webResolveFight() {
 	});
 }
 
+/* TRIGGERED BY WEB3 FUNC */
+
+function startVentureAnim() {
+	doc_loaderIdle.style.display = "none";
+	doc_loaderActive.style.display = "block";	
+}
+
+function stopVentureAnim() {
+	doc_loaderIdle.style.display = "block";
+	doc_loaderActive.style.display = "none";
+}
+
 /* CONTRACT ABI */
 
 abiDefinition=[{"constant": false,"inputs": [{"name": "_message","type": "string"}],"name": "ChangeMessage","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"}],"name": "HatchEgg","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"}],"name": "JoinedGame","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "eggUsed","type": "uint256"},{"indexed": false,"name": "eggBonus","type": "uint256"},{"indexed": false,"name": "newSnail","type": "uint256"},{"indexed": false,"name": "nestCount","type": "uint256"},{"indexed": false,"name": "nest","type": "uint256"}],"name": "Hatched","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "message","type": "string"}],"name": "ChangedMessage","type": "event"},{"constant": false,"inputs": [{"name": "_name","type": "string"}],"name": "JoinGame","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "name","type": "string"}],"name": "NamedPlayer","type": "event"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_name","type": "string"}],"name": "NameMe","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "previousName","type": "string"},{"indexed": false,"name": "name","type": "string"}],"name": "RenamedOther","type": "event"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_name","type": "string"},{"name": "_adr","type": "address"}],"name": "RenameOther","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": false,"inputs": [],"name": "ResolveFight","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "nest","type": "uint256"},{"indexed": false,"name": "fighterCount","type": "uint256"},{"indexed": false,"name": "odd","type": "uint256"}],"name": "VenturedLair","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "nest","type": "uint256"},{"indexed": false,"name": "fighterCount","type": "uint256"},{"indexed": false,"name": "odd","type": "uint256"},{"indexed": false,"name": "result","type": "uint256"},{"indexed": false,"name": "reward","type": "uint256"}],"name": "WonFight","type": "event"},{"anonymous": false,"inputs": [{"indexed": true,"name": "player","type": "string"},{"indexed": false,"name": "nest","type": "uint256"},{"indexed": false,"name": "fighterCount","type": "uint256"},{"indexed": false,"name": "odd","type": "uint256"},{"indexed": false,"name": "result","type": "uint256"}],"name": "LostFight","type": "event"},{"inputs": [],"payable": false,"stateMutability": "nonpayable","type": "constructor"},{"constant": false,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_fighterCount","type": "uint256"},{"name": "_odd","type": "uint256"}],"name": "VentureLair","outputs": [],"payable": false,"stateMutability": "nonpayable","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "canChangeMessage","outputs": [{"name": "","type": "bool"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_adr","type": "address"}],"name": "ComputeEgg","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "ComputeGlobalBonus","outputs": [{"name": "_egg","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "FROGKING_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_adr","type": "address"}],"name": "GetAscension","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_adr","type": "address"}],"name": "GetName","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "_nest","type": "uint256"},{"name": "_adr","type": "address"}],"name": "GetNest","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "hasStartingSnail","outputs": [{"name": "","type": "bool"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "lastGlobalHatch","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "message","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "name","outputs": [{"name": "","type": "string"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "NAME_OTHER_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "NAME_YOURSELF_REQ","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"},{"name": "","type": "uint256"}],"name": "nest","outputs": [{"name": "size","type": "uint256"},{"name": "lastHatch","type": "uint256"},{"name": "ascension","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveBlock","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveCount","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveNest","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [{"name": "","type": "address"}],"name": "resolveOdd","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "STARTING_SNAIL","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"},{"constant": true,"inputs": [],"name": "TIME_TO_HATCH_1SNAIL","outputs": [{"name": "","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"}]
@@ -346,11 +361,11 @@ function ChangeMessage(_message,callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ChangeMessage ',result);
+            //console.log('ChangeMessage ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -362,11 +377,11 @@ function HatchEgg(_nest,callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('HatchEgg ',result);
+            //console.log('HatchEgg ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -379,11 +394,11 @@ function JoinGame(_name,callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('JoinGame ',result);
+            //console.log('JoinGame ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -396,11 +411,11 @@ function NameMe(_nest,_name,callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('NameMe ',result);
+            //console.log('NameMe ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -413,11 +428,11 @@ function RenameOther(_nest,_name,_adr,callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('RenameOther ',result);
+            //console.log('RenameOther ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -430,11 +445,12 @@ function ResolveFight(callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ResolveFight ',result);
-            callback(result)
+            //console.log('ResolveFight ',result);
+            callback(result);
+			stopVentureAnim();
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -447,11 +463,12 @@ function VentureLair(_nest,_fighterCount,_odd,callback){
     var endstr=web3.eth.sendTransaction({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('VentureLair ',result);
-            callback(result)
+            //console.log('VentureLair ',result);
+            callback(result);
+			startVentureAnim();
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -464,11 +481,11 @@ function canChangeMessage(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('canChangeMessage ',result);
+            //console.log('canChangeMessage ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -481,11 +498,11 @@ function ComputeEgg(_nest,_adr,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ComputeEgg ',web3.toDecimal(result));
+            //console.log('ComputeEgg ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -498,11 +515,11 @@ function ComputeGlobalBonus(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('ComputeGlobalBonus ',web3.toDecimal(result));
+            //console.log('ComputeGlobalBonus ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -515,11 +532,11 @@ function FROGKING_REQ(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('FROGKING_REQ ',web3.toDecimal(result));
+            //console.log('FROGKING_REQ ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -532,11 +549,11 @@ function GetAscension(_nest,_adr,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('GetAscension ',web3.toDecimal(result));
+            //console.log('GetAscension ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -549,11 +566,11 @@ function GetName(_adr,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('GetName ',toAscii(result));
+            //console.log('GetName ',toAscii(result));
             callback(toAscii(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -566,11 +583,11 @@ function GetNest(_nest,_adr,callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('GetNest ',web3.toDecimal(result));
+            //console.log('GetNest ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -583,11 +600,11 @@ function hasStartingSnail(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('hasStartingSnail ',result);
+            //console.log('hasStartingSnail ',result);
             callback(result)
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -600,11 +617,11 @@ function lastGlobalHatch(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('lastGlobalHatch ',web3.toDecimal(result));
+            //console.log('lastGlobalHatch ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -617,11 +634,11 @@ function message(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('message ',toAscii(result));
+            //console.log('message ',toAscii(result));
             callback(toAscii(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -634,11 +651,11 @@ function name(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('name ',toAscii(result));
+            //console.log('name ',toAscii(result));
             callback(toAscii(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -651,11 +668,11 @@ function NAME_OTHER_REQ(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('NAME_OTHER_REQ ',web3.toDecimal(result));
+            //console.log('NAME_OTHER_REQ ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -668,11 +685,11 @@ function NAME_YOURSELF_REQ(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('NAME_YOURSELF_REQ ',web3.toDecimal(result));
+            //console.log('NAME_YOURSELF_REQ ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -685,11 +702,11 @@ function nest(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('nest ',web3.toDecimal(result));
+            //console.log('nest ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -702,11 +719,11 @@ function resolveBlock(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('resolveBlock ',web3.toDecimal(result));
+            //console.log('resolveBlock ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -719,11 +736,11 @@ function resolveCount(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('resolveCount ',web3.toDecimal(result));
+            //console.log('resolveCount ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -736,11 +753,11 @@ function resolveNest(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('resolveNest ',web3.toDecimal(result));
+            //console.log('resolveNest ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -753,11 +770,11 @@ function resolveOdd(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('resolveOdd ',web3.toDecimal(result));
+            //console.log('resolveOdd ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -770,11 +787,11 @@ function STARTING_SNAIL(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('STARTING_SNAIL ',web3.toDecimal(result));
+            //console.log('STARTING_SNAIL ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
@@ -787,11 +804,11 @@ function TIME_TO_HATCH_1SNAIL(callback){
     var endstr=web3.eth.call({to:contractAddress, from:null, data: outputData},
     function(error,result){
         if(!error){
-            console.log('TIME_TO_HATCH_1SNAIL ',web3.toDecimal(result));
+            //console.log('TIME_TO_HATCH_1SNAIL ',web3.toDecimal(result));
             callback(web3.toDecimal(result))
         }
         else{
-            console.log('transaction failed with ',error.message)
+            //console.log('transaction failed with ',error.message)
         }
     });
 }
