@@ -174,8 +174,8 @@ function formatName(_name, _adr){
 }
 
 function sendFieldOther(_adr){
-	doc_fieldOtherAdr.value = _adr;
-	console.log(doc_fieldOtherAdr.value);
+	doc_fieldOtherAdr.innerHTML = _adr;
+	console.log(doc_fieldOtherAdr.innerHTML);
 }
 
 //Loop function to go through nests
