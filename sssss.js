@@ -39,10 +39,14 @@ window.addEventListener('load', async () => {
 
 var a_message = "";
 var a_playerName = "";
-var a_req = 0;
+var a_globalBonus = 0;
 var a_nestSize = [0, 0, 0, 0, 0, 0, 0, 0];
 var a_nestEgg = [0, 0, 0, 0, 0, 0, 0, 0];
 var a_nestAscension = [0, 0, 0, 0, 0, 0, 0, 0];
+
+var c_nestNameMe = 0;
+var c_nestRenameOther = 0;
+var c_nestVenture = 0;
 
 var f_message = "";
 var f_initialName = "";
@@ -56,6 +60,7 @@ var m_account = "";
 
 var doc_message = document.getElementById('message');
 var doc_name = document.getElementById('name');
+var doc_globalBonus = document.getElementById('global_bonus');
 
 var doc_fieldMessage = document.getElementById('field_message');
 var	doc_fieldInitialName = document.getElementById('field_first_name');
@@ -110,6 +115,7 @@ function mainUpdate(){
 	updateMessage();
 	updateEthAccount();
 	updatePlayerName();
+	updateGlobalBonus();
 	runLoop(checkNestSize);
 	runLoop(checkNestEgg);
 	runLoop(checkNestAscension);
@@ -124,6 +130,7 @@ function fastUpdate(){
 	refreshFieldOtherName();
 	refreshFieldFighter();
 	refreshFieldOdd();
+	refreshNestNameMe();
 	setTimeout(fastUpdate, 123);
 }
 
@@ -188,11 +195,24 @@ function refreshFieldOdd(){
 	f_odd = doc_fieldOdd.value;
 }
 
+function refreshNestNameMe(){
+	c_nestNameMe = document.getElementById("nestNameMe");
+}
+
+function refreshNestRenameOther(){
+	c_nestRenameOther = document.getElementById("nestRenameOther");
+}
+
+function refreshNestVenture(){
+	c_nestVenture = document.getElementById("nestVenture");
+}
+
 /* TEXT UPDATE */
 
 function updateText(){
 	doc_name.innerHTML = a_playerName;
 	doc_message.innerHTML = a_message;
+	doc_globalBonus.innerHTML = a_globalBonus;
 	runLoop(changeNestText);
 	runLoop(changeEggText);
 	runLoop(changeAscensionText);
@@ -228,6 +248,12 @@ function updatePlayerName(){
 	});
 }
 
+function updateGlobalBonus(){
+	ComputeGlobalBonus(function(result) {
+		a_globalBonus = result;
+	});
+}
+
 function checkNestSize(_nest){
 	GetNest(_nest, m_account, function(result) {
 		a_nestSize[_nest] = result;
@@ -240,13 +266,10 @@ function checkNestEgg(_nest){
 	});
 }
 
-function checkNestCount(_nest){
+function checkNestAscension(_nest){
 	GetAscension(_nest, m_account, function(result) {
 		a_nestAscension[_nest] = result;
 	});
-}
-
-function checkNestAscension(_nest){
 }
 
 /* WEB3 ACTIONS */
@@ -262,12 +285,12 @@ function webHatch(_nest) {
 }
 
 function webNameMe() {
-	NameMe(1, f_name, function(){
+	NameMe(c_nestNameMe, f_name, function(){
 	});
 }
 
 function webRenameOther() {
-	RenameOther(1, f_otherName, f_otherAdr, function(){
+	RenameOther(c_nestRenameOther, f_otherName, f_otherAdr, function(){
 	});
 }
 
@@ -280,7 +303,7 @@ function webVentureLair() {
 	if(f_odd < 5){
 		f_odd = 5;
 	}
-	VentureLair(1, f_fighter, f_odd, function(){
+	VentureLair(c_nestVenture, f_fighter, f_odd, function(){
 	});
 }
 

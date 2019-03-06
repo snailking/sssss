@@ -16,6 +16,10 @@
 	<body align="center">
 		<!-- TITLE -->
 		<h1 align="center">SUPER SLOTHLY SNAIL SURPRISE SLAUGHTER</h1>
+		<!-- GLOBAL HATCH BONUS -->
+		<div class="jumbotron" align="center">
+			<h3>GLOBAL HATCH BONUS = <span id="global_bonus">?</span> EGGS</h3>
+		</div>
 		<!-- MESSAGE -->
 		<h1 align="center"><span class="pulse" id="message">?</span></h1>
 		<!-- SNAIL MANAGEMENT -->
@@ -79,19 +83,40 @@
 			<h3>LEAVE YOUR MARK</h3>
 			<div class="row">
 				<div class="col-sm">
-					<button class="btn btn-lg btn-info" onclick="webNameMe()">CHANGE YOUR NAME</button><br>
-					<h5>Your new name: <input type="text" id="field_name" size="10">
+					<button class="btn btn-lg btn-info" onclick="webNameMe()">CHANGE YOUR NAME</button><br> 
+					
+					<h5>Your new name: <input type="text" id="field_name" value="(enter your new name here)" size="10">
 					<h5>Requirement: 10k snails</h5>
+					<h5>Which nest to sacrifice? <select id="nestNameMe">
+						<option value="0">Red</option>
+						<option value="1">Green</option>
+						<option value="2">Yellow</option>
+						<option value="3">Purple</option>
+						<option value="4">Orange</option>
+						<option value="5">Blue</option>
+						<option value="6">White</option>
+						<option value="7">Black</option>
+					</select></h5>
 				</div>
 				<div class="col-sm">
 					<button class="btn btn-lg btn-info" onclick="webRenameOther()">RENAME ANOTHER PLAYER</button><br>
-					<h5>Who to rename? <input type="text" id="field_other" size="10"></h5>
-					<h5>Their new name: <input type="text" id="field_other_name" size="10"></h5>
+					<h5>Who to rename? <input type="text" id="field_other" value="(enter 0x address here)" size="10"></h5>
+					<h5>Their new name: <input type="text" id="field_other_name" value="(enter their new name here)" size="10"></h5>
 					<h5>Requirement: 100k snails</h5>
+					<h5>Which nest to sacrifice? <select id="nestRenameOther">
+						<option value="0">Red</option>
+						<option value="1">Green</option>
+						<option value="2">Yellow</option>
+						<option value="3">Purple</option>
+						<option value="4">Orange</option>
+						<option value="5">Blue</option>
+						<option value="6">White</option>
+						<option value="7">Black</option>
+					</select></h5>
 				</div>
 				<div class="col-sm">
 					<button class="btn btn-lg btn-info" onclick="webChangeMessage()">CHANGE MESSAGE</button><br>
-					<h5>New message: <input type="text" id="field_message" size="10"></h5>
+					<h5>New message: <input type="text" id="field_message" value="(enter your message here)" size="10"></h5>
 					<h5>Requirement: Ascend</h5>
 				</div>
 			</div>
@@ -104,6 +129,16 @@
 					<button class="btn btn-lg btn-info" onclick="webVentureLair()">VENTURE IN SLOTH LAIR</button><br>
 					<h5>Snails to send: <input type="text" id="field_fighter" value="1" size="3">
 					<h5>Victory odds: <input type="text" id="field_odd" value="50" size="2">
+					<h5>Which nest to send? <select id="nestVenture">
+						<option value="0">Red</option>
+						<option value="1">Green</option>
+						<option value="2">Yellow</option>
+						<option value="3">Purple</option>
+						<option value="4">Orange</option>
+						<option value="5">Blue</option>
+						<option value="6">White</option>
+						<option value="7">Black</option>
+					</select></h5>
 				</div>
 				<div class="col-sm">
 					<button class="btn btn-lg btn-info" onclick="webResolveFight()">RESOLVE FIGHT</button><br>
