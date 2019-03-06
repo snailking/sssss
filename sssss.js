@@ -44,6 +44,8 @@ var a_nestSize = [0, 0, 0, 0, 0, 0, 0, 0];
 var a_nestEgg = [0, 0, 0, 0, 0, 0, 0, 0];
 var a_nestAscension = [0, 0, 0, 0, 0, 0, 0, 0];
 
+var b_reward = 0;
+
 var c_nestNameMe = 0;
 var c_nestRenameOther = 0;
 var c_nestVenture = 0;
@@ -69,6 +71,7 @@ var	doc_fieldOtherAdr = document.getElementById('field_other');
 var	doc_fieldOtherName = document.getElementById('field_other_name');
 var	doc_fieldFighter = document.getElementById('field_fighter');
 var	doc_fieldOdd = document.getElementById('field_odd');
+var doc_reward = document.getElementById('reward');
 
 var doc_nestNameMe = document.getElementById('nestNameMe');
 var doc_nestRenameOther = document.getElementById('nestRenameOther');
@@ -110,6 +113,22 @@ document.getElementById('ascension6'),
 document.getElementById('ascension7')
 ];
 
+/* PAST EVENT LOG */
+
+var timeLaunch = 1551522920;
+var launchBlock = 7584537;
+var blockSpan = 5; //5 seconds blocks on POA core
+var startBlock = 0;
+var ranLog = false;
+
+function checkBlock(){
+	web3.eth.getBlockNumber(function (error, result){
+		//console.log("block number is " + result);
+		startBlock = parseInt(result - (172800 / blockSpan)); //~2 days
+		if(startBlock < launchBlock) { startBlock = launchBlock };
+	});
+}
+
 /* UPDATE LOOP */
 
 function initUpdate(){
@@ -123,6 +142,7 @@ function mainUpdate(){
 	updateEthAccount();
 	updatePlayerName();
 	updateGlobalBonus();
+	updateLog();
 	runLoop(checkNestSize);
 	runLoop(checkNestEgg);
 	runLoop(checkNestAscension);
@@ -137,6 +157,7 @@ function fastUpdate(){
 	refreshFieldOtherName();
 	refreshFieldFighter();
 	refreshFieldOdd();
+	refreshReward();
 	setTimeout(fastUpdate, 123);
 }
 
@@ -213,6 +234,11 @@ function refreshFieldOdd(){
 		doc_fieldOdd.value = 95;
 	}
 	f_odd = doc_fieldOdd.value;
+}
+
+function refreshReward(){
+	b_reward = parseInt(f_fighter * 100 / f_odd) - f_fighter));
+	doc_reward.innerHTML = b_reward;
 }
 
 function changeNestName(_nest){
@@ -347,6 +373,113 @@ function stopVentureAnim() {
 	doc_loaderIdle.style.display = "block";
 	doc_loaderActive.style.display = "none";
 }
+
+
+/* EVENT WATCH */
+
+//Store transaction hash and event name for each event, and check before executing result, as web3 events fire twice (metamask?)
+var store_hash = [];
+var store_event = [];
+
+function checkHash(txhash, eventname) {
+	var i = 0;
+	var _name = false;
+	do {
+		if(store_hash[i] == txhash) {
+			if(store_event[i] == eventname) {
+				return 0;
+			}
+		}
+		i++;
+	}
+	while(i < store_event.length);
+	
+	//Add new tx hash and event name
+	store_hash.push(txhash);
+	store_event.push(eventname);
+	
+	//Remove first entry if there's more than 8 entries saved
+	if(store_hash.length > 8){
+		store_hash.shift();
+	}
+	if(store_event.length > 8){
+		store_event.shift();
+	}
+}
+
+				
+/* EVENTS */
+
+var logboxscroll = document.getElementById('logboxscroll');
+var eventlogdoc = document.getElementById("eventlog");
+
+//Changes u_updateLog to true, manual choice in case event watching fails
+function startLogging(){
+	u_updateEvent = true;
+}
+
+//Update log every few seconds if player chose to
+function updateLog(){
+	if(u_updateEvent == true || p_keepUpdating == true){
+		runLog();
+	}
+}
+
+/*
+event JoinedGame (string indexed player);
+    event Hatched(string indexed player, uint256 eggUsed, uint256 eggBonus, uint256 newSnail, uint256 nestCount, uint256 nest);
+    event ChangedMessage(string indexed player, string message);
+    event NamedPlayer(string indexed player, string name);
+    event RenamedOther(string indexed player, string previousName, string name);
+    event VenturedLair(string indexed player, uint256 nest, uint256 fighterCount, uint256 odd);
+    event WonFight(string indexed player, uint256 nest, uint256 fighterCount, uint256 odd, uint256 result, uint256 reward);
+    event LostFight(string indexed player, uint256 nest, uint256 fighterCount, uint256 odd, uint256 result);
+*/
+function runLog(){
+	ranLog = true;
+	myContract.allEvents({ fromBlock: startBlock, toBlock: 'latest' }).get(function(error, result){
+		if(!error){
+			////console.log(result);
+			var i = 0;
+			if(result.length > 0){ //check if we have events, if not stop the loop
+				p_keepUpdating = true;
+				for(i = 0; i < 40; i++){ //loop through only 40 events at most
+					if(i < result.length){ //make sure there's enough events
+						if(checkHash(result[i].transactionHash, result[i].event) != 0) {
+							startBlock = result[i].blockNumber; //store the last blocknumber to start next loop
+							dateLog(result[i].blockNumber);
+							if(result[i].event == "JoinedGame"){
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " enters the Sloth Arena.";								
+							} else if(result[i].event == "Hatched"){
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " hatched " + result[i].args.eggUsed + " eggs (+" + result[i].args.eggBonus + " bonus) into " + result[i].args.newSnail + " snails. Their " + idToName(result[i].args.nest) + " nest has " + result[i].args.nestCount + " snails.";		
+							} else if(result[i].event == "ChangedMessage"){
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " changed the message to: " + toAscii(result[i].args.message);
+							} else if(result[i].event == "NamedPlayer"){
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] From now on, " + toAscii(result[i].args.player) + " will be known as " + toAscii(result[i].args.name);			
+							} else if(result[i].event == "RenamedOther"){
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] Say goodbye to " + toAscii(result[i].args.previousName) + "! " + toAscii(result[i].args.player + " decided on their new name: " + toAscii(result[i].args.name;
+							} else if(result[i].event == "VenturedLair"){
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] " + toAscii(result[i].args.player) + " sends " + result[i].args.fighterCount + " " + idToName(result[i].args.nest) + " snails to fight the Sloth. We estimate their odds of success at " + result[i].args.odd + "%";
+							} else if(result[i].event == "WonFight"){
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] VICTORY! The sloth rolls a " + result[i].args.result + " against " + toAscii(result[i].args.player) + "'s " + result[i].args.odd + ", and rolls over. " + idToName(result[i].args.nest) + " snails take home " + result[i].args.reward + " of their friends.";
+							} else if(result[i].event == "LostFight"){
+								eventlogdoc.innerHTML += "<br>[" + datetext + "] DEFEAT! The sloth munches on " + result[i].args.fighterCount + " snails tonight, with a "  + result[i].args.result + " against " + toAscii(result[i].args.player) + "'s " + result[i].args.odd;
+							}
+							logboxscroll.scrollTop = logboxscroll.scrollHeight;
+						}
+					}	
+				}
+			} else {
+				p_keepUpdating = false;
+			}
+		}
+		else{
+			//////console.log("problem!");
+		}
+	});
+}
+
+/* Events */
 
 /* CONTRACT ABI */
 

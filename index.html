@@ -78,6 +78,51 @@
 				</div>
 			</div>
 		</div><br>
+		<!-- SLOTH FIGHT -->
+		<div class="jumbotron" align="center">
+			<h3>FIGHT THE SLOTH</h3>
+			<div class="row">
+				<div class="col-sm">
+					<button class="btn btn-lg btn-success" onclick="webVentureLair()">VENTURE IN SLOTH LAIR</button><br>
+					<h5>Snails to send: <input type="text" id="field_fighter" value="1" size="3"></h5>
+					<h5>Victory odds: <input type="text" id="field_odd" value="50" size="2"></h5>
+					<h5>Reward: <span id="reward">?</span></h5>
+					<h5>Which nest to send?  <div class="dropdown">
+						<button id="nestVenture">Red</button>
+						<div class="dropdown-content">
+							<a onClick="changeNestVenture(0)">Red</a>
+							<a onClick="changeNestVenture(1)">Green</a>
+							<a onClick="changeNestVenture(2)">Yellow</a>
+							<a onClick="changeNestVenture(3)">Purple</a>
+							<a onClick="changeNestVenture(4)">Orange</a>
+							<a onClick="changeNestVenture(5)">Blue</a>
+							<a onClick="changeNestVenture(6)">White</a>
+							<a onClick="changeNestVenture(7)">Black</a>
+						</div>
+					</div></h5>
+				</div>
+				<div class="col-sm">
+					<br><div id="loader_idle" class="loader-idle"></div><div id="loader_active" class="loader-active"></div>
+				</div>
+				<div class="col-sm">
+					<button class="btn btn-lg btn-success" onclick="webResolveFight()">RESOLVE FIGHT</button><br>
+				</div>
+			</div>
+		</div><br>
+		<!-- EVENT LOG -->
+		<div class="jumbotron">
+			<div class="row">
+				<div class="col-sm">
+					<h3 style="display: inline-block;">EVENTS</h3>
+				</div>
+				<div class="col-sm" align="right">
+					<button class="btn btn-success" onclick="runLog()">Get Past Events</button>
+				</div>
+			</div>
+			<div class="scroll-box img-border2 info2" id="logboxscroll">
+				<p><span id="eventlog">[Waiting for events...]</span></p>
+			</div>
+		</div><br>
 		<!-- CHANGE TEXT -->
 		<div class="jumbotron" align="center">
 			<h3>LEAVE YOUR MARK</h3>
@@ -127,36 +172,7 @@
 				</div>
 			</div>
 		</div><br>
-		<!-- SLOTH FIGHT -->
-		<div class="jumbotron" align="center">
-			<h3>FIGHT THE SLOTH</h3>
-			<div class="row">
-				<div class="col-sm">
-					<button class="btn btn-lg btn-success" onclick="webVentureLair()">VENTURE IN SLOTH LAIR</button><br>
-					<h5>Snails to send: <input type="text" id="field_fighter" value="1" size="3">
-					<h5>Victory odds: <input type="text" id="field_odd" value="50" size="2">
-					<h5>Which nest to send?  <div class="dropdown">
-						<button id="nestVenture">Red</button>
-						<div class="dropdown-content">
-							<a onClick="changeNestVenture(0)">Red</a>
-							<a onClick="changeNestVenture(1)">Green</a>
-							<a onClick="changeNestVenture(2)">Yellow</a>
-							<a onClick="changeNestVenture(3)">Purple</a>
-							<a onClick="changeNestVenture(4)">Orange</a>
-							<a onClick="changeNestVenture(5)">Blue</a>
-							<a onClick="changeNestVenture(6)">White</a>
-							<a onClick="changeNestVenture(7)">Black</a>
-						</div>
-					</div></h5>
-				</div>
-				<div class="col-sm">
-					<br><div id="loader_idle" class="loader-idle"></div><div id="loader_active" class="loader-active"></div>
-				</div>
-				<div class="col-sm">
-					<button class="btn btn-lg btn-success" onclick="webResolveFight()">RESOLVE FIGHT</button><br>
-				</div>
-			</div>
-		</div><br>
+		
 		<!-- EVENTS -->
 		<!-- DESCRIPTION -->
 		<div class="jumbotron" align="center">
