@@ -87,32 +87,38 @@
 					
 					<h5>Your new name: <input type="text" id="field_name" value="(enter your new name here)" size="10">
 					<h5>Requirement: 10k snails</h5>
-					<h5>Which nest to sacrifice? <select id="nestNameMe">
-						<option value="0">Red</option>
-						<option value="1">Green</option>
-						<option value="2">Yellow</option>
-						<option value="3">Purple</option>
-						<option value="4">Orange</option>
-						<option value="5">Blue</option>
-						<option value="6">White</option>
-						<option value="7">Black</option>
-					</select></h5>
+					<h5>Which nest to sacrifice? <div class="dropdown">
+						<button id="nestNameMe">Red</button>
+						<div class="dropdown-content">
+							<a onClick="changeNestName(0)">Red</span>
+							<a onClick="changeNestName(1)">Green</a>
+							<a onClick="changeNestName(2)">Yellow</a>
+							<a onClick="changeNestName(3)">Purple</a>
+							<a onClick="changeNestName(4)">Orange</a>
+							<a onClick="changeNestName(5)">Blue</a>
+							<a onClick="changeNestName(6)">White</a>
+							<a onClick="changeNestName(7)">Black</a>
+						</div>
+					</div></h5>
 				</div>
 				<div class="col-sm">
 					<button class="btn btn-lg btn-info" onclick="webRenameOther()">RENAME ANOTHER PLAYER</button><br>
 					<h5>Who to rename? <input type="text" id="field_other" value="(enter 0x address here)" size="10"></h5>
 					<h5>Their new name: <input type="text" id="field_other_name" value="(enter their new name here)" size="10"></h5>
 					<h5>Requirement: 100k snails</h5>
-					<h5>Which nest to sacrifice? <select id="nestRenameOther">
-						<option value="0">Red</option>
-						<option value="1">Green</option>
-						<option value="2">Yellow</option>
-						<option value="3">Purple</option>
-						<option value="4">Orange</option>
-						<option value="5">Blue</option>
-						<option value="6">White</option>
-						<option value="7">Black</option>
-					</select></h5>
+					<h5>Which nest to sacrifice? <div class="dropdown">
+						<button id="nestRenameOther">Red</button>
+						<div class="dropdown-content">
+							<a onClick="changeNestRename(0)">Red</a>
+							<a onClick="changeNestRename(1)">Green</a>
+							<a onClick="changeNestRename(2)">Yellow</a>
+							<a onClick="changeNestRename(3)">Purple</a>
+							<a onClick="changeNestRename(4)">Orange</a>
+							<a onClick="changeNestRename(5)">Blue</a>
+							<a onClick="changeNestRename(6)">White</a>
+							<a onClick="changeNestRename(7)">Black</a>
+						</div>
+					</div></h5>
 				</div>
 				<div class="col-sm">
 					<button class="btn btn-lg btn-info" onclick="webChangeMessage()">CHANGE MESSAGE</button><br>
@@ -129,16 +135,19 @@
 					<button class="btn btn-lg btn-info" onclick="webVentureLair()">VENTURE IN SLOTH LAIR</button><br>
 					<h5>Snails to send: <input type="text" id="field_fighter" value="1" size="3">
 					<h5>Victory odds: <input type="text" id="field_odd" value="50" size="2">
-					<h5>Which nest to send? <select id="nestVenture">
-						<option value="0" onclick="changeNestVenture(0)")>Red</option>
-						<option value="1">Green</option>
-						<option value="2">Yellow</option>
-						<option value="3">Purple</option>
-						<option value="4">Orange</option>
-						<option value="5" onclick="changeNestVenture(5)">Blue</option>
-						<option value="6">White</option>
-						<option value="7">Black</option>
-					</select></h5>
+					<h5>Which nest to send?  <div class="dropdown">
+						<button id="nestVenture">Red</button>
+						<div class="dropdown-content">
+							<a onClick="changeNestVenture(0)">Red</a>
+							<a onClick="changeNestVenture(1)">Green</a>
+							<a onClick="changeNestVenture(2)">Yellow</a>
+							<a onClick="changeNestVenture(3)">Purple</a>
+							<a onClick="changeNestVenture(4)">Orange</a>
+							<a onClick="changeNestVenture(5)">Blue</a>
+							<a onClick="changeNestVenture(6)">White</a>
+							<a onClick="changeNestVenture(7)">Black</a>
+						</div>
+					</div></h5>
 				</div>
 				<div class="col-sm">
 					<button class="btn btn-lg btn-info" onclick="webResolveFight()">RESOLVE FIGHT</button><br>
@@ -146,6 +155,7 @@
 			</div>
 		</div>
 		<!-- EVENTS -->
+		<br><br><br><br><br><br><br><br><br><br><br><br><br>
 		<!-- JAVASCRIPT -->
 		<script src="sssss.js"></script>				
 		<script>

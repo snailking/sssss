@@ -70,6 +70,10 @@ var	doc_fieldOtherName = document.getElementById('field_other_name');
 var	doc_fieldFighter = document.getElementById('field_fighter');
 var	doc_fieldOdd = document.getElementById('field_odd');
 
+var doc_nestNameMe = document.getElementById('nestNameMe');
+var doc_nestRenameOther = document.getElementById('nestRenameOther');
+var doc_nestVenture = document.getElementById('nestVenture');
+
 var doc_nestSize = [
 document.getElementById('nest0'),
 document.getElementById('nest1'),
@@ -130,7 +134,6 @@ function fastUpdate(){
 	refreshFieldOtherName();
 	refreshFieldFighter();
 	refreshFieldOdd();
-	refreshNestNameMe();
 	setTimeout(fastUpdate, 123);
 }
 
@@ -158,6 +161,20 @@ function toAscii(hex) {
   }
 
   return str.substring(2);
+}
+
+//Convert ID to color
+function idToName(_id){
+	switch(_id){
+		case 0: return "Red";
+		case 1: return "Green";
+		case 2: return "Yellow";
+		case 3: return "Purple";
+		case 4: return "Orange";
+		case 5: return "Blue";
+		case 6: return "White";
+		case 7: return "Black";
+	}
 }
 
 /* MODAL */
@@ -195,20 +212,19 @@ function refreshFieldOdd(){
 	f_odd = doc_fieldOdd.value;
 }
 
-function refreshNestNameMe(){
-	c_nestNameMe = document.getElementById("nestNameMe");
+function changeNestName(_nest){
+	c_nestNameMe = _nest;
+	doc_nestNameMe.innerHTML = idToName(_nest);
 }
 
-function refreshNestRenameOther(){
-	c_nestRenameOther = document.getElementById("nestRenameOther");
-}
-
-function refreshNestVenture(){
-	c_nestVenture = document.getElementById("nestVenture");
+function changeNestRename(_nest){
+	c_nestRenameOther = _nest;
+	doc_nestRenameOther.innerHTML = idToName(_nest);
 }
 
 function changeNestVenture(_nest){
 	c_nestVenture = _nest;
+	doc_nestVenture.innerHTML = idToName(_nest);
 }
 
 /* TEXT UPDATE */
