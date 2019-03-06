@@ -207,6 +207,10 @@ function refreshNestVenture(){
 	c_nestVenture = document.getElementById("nestVenture");
 }
 
+function changeNestVenture(_nest){
+	c_nestVenture = _nest;
+}
+
 /* TEXT UPDATE */
 
 function updateText(){
@@ -225,6 +229,7 @@ function changeNestText(_nest){
 function changeEggText(_nest){
 	doc_nestEgg[_nest].innerHTML = a_nestEgg[_nest];
 }
+
 function changeAscensionText(_nest){
 	doc_nestAscension[_nest].innerHTML = a_nestAscension[_nest];
 }
