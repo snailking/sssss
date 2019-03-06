@@ -40,7 +40,7 @@ window.addEventListener('load', async () => {
 var a_message = "";
 var a_playerName = "";
 var a_req = 0;
-var a_nestCount = [0, 0, 0, 0, 0, 0, 0, 0];
+var a_nestSize = [0, 0, 0, 0, 0, 0, 0, 0];
 var a_nestEgg = [0, 0, 0, 0, 0, 0, 0, 0];
 var a_nestAscension = [0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -193,8 +193,21 @@ function refreshFieldOdd(){
 function updateText(){
 	doc_name.innerHTML = a_playerName;
 	doc_message.innerHTML = a_message;
-	doc_nest1.innerHTML = a_nest1;
+	runLoop(changeNestText);
+	runLoop(changeEggText);
+	runLoop(changeAscensionText);
 }	
+
+function changeNestText(_nest){
+	doc_nestSize[_nest].innerHTML = a_nestSize[_nest];
+}
+
+function changeEggText(_nest){
+	doc_nestEgg[_nest].innerHTML = a_nestEgg[_nest];
+}
+function changeAscensionText(_nest){
+	doc_nestAscension[_nest].innerHTML = a_nestAscension[_nest];
+}
 
 /* WEB3 CALLS */
 
