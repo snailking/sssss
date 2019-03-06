@@ -129,6 +129,8 @@ function checkBlock(){
 	});
 }
 
+checkBlock();
+
 /* UPDATE LOOP */
 
 function initUpdate(){
