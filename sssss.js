@@ -168,15 +168,15 @@ function fastUpdate(){
 //Format event name/address into a clickable name that sets address in the rename field
 function formatName(_name, _adr){
 	console.log(_adr);
-	var _stringLink = '<a onClick="sendFieldOther('+ _adr + ')">' + _name + '</a>';
+	var _stringLink = '<a onClick="sendFieldOther(' + _adr + ')">' + _name + '</a>';
 	return _stringLink;
 
 }
 
 function sendFieldOther(_adr){
 	console.log(_adr);
-	doc_fieldOtherAdr.innerHTML = _adr;
-	console.log(doc_fieldOtherAdr.innerHTML);
+	doc_fieldOtherAdr.value = _adr;
+	console.log(doc_fieldOtherAdr.value);
 }
 
 //Loop function to go through nests
